@@ -13,9 +13,8 @@ public class LocationsControllerIT {
 
     @Test
     void testGetLocations() {
-        String locationsString = controller.getLocations();
+        String locationsString = controller.getLocations().toString();
 
         Assertions.assertThat(locationsString).contains("Párizs");
-        Assertions.assertThat(locationsString).endsWith("rk]");
     }
 }

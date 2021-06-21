@@ -22,11 +22,10 @@ public class LocationsControllerTest {
 
     @Test
     void testGetLocations() {
-        when(service.getLocations()).thenReturn(Arrays.asList(new Location("Bagdad"), new Location("Peking")));
+        when(service.getLocations()).thenReturn(Arrays.asList(new LocationDto("Bagdad"), new LocationDto("Peking")));
 
-        String locationsString = controller.getLocations();
+        String locationsString = controller.getLocations().toString();
 
         Assertions.assertThat(locationsString).contains("Peking");
-        Assertions.assertThat(locationsString).startsWith("[B");
     }
 }
