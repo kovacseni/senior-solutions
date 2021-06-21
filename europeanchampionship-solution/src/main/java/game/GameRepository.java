@@ -11,12 +11,12 @@ public class GameRepository {
 
     private List<Game> games = new ArrayList<>();
 
-    public List<Game> getGames() {
-        return new ArrayList<>(games);
-    }
-
     public void addGame(Game game) {
         games.add(game);
+    }
+
+    public List<Game> getGames() {
+        return new ArrayList<Game>(games);
     }
 
     public void readFromFile(String fileName) {
@@ -26,7 +26,7 @@ public class GameRepository {
             String[] result;
             while ((line = bf.readLine()) != null) {
                 result = line.split(";");
-                this.addGame(new Game(result[0], result[1], Integer.parseInt(result[2]), Integer.parseInt(result[3])));
+                this.addGame(new Game(result[0], result[1], result[2], result[3]));
             }
         } catch (IOException ioe) {
             throw new IllegalArgumentException("File not found", ioe);

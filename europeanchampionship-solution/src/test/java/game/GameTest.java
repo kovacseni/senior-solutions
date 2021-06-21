@@ -7,11 +7,11 @@ public class GameTest {
 
     @Test
     void testCreate() {
-        Game game = new Game("Magyarország", "Portugália", 3, 1);
+        Game game = new Game("Magyarország", "Portugália", "3", "1");
 
         Assertions.assertEquals("Magyarország", game.getFirstCountry());
         Assertions.assertEquals("Portugália", game.getSecondCountry());
-        Assertions.assertEquals(3, game.getFirstCountryScore());
-        Assertions.assertEquals(1, game.getSecondCountryScore());
+        Assertions.assertEquals("3", game.getFirstCountryScore());
+        Assertions.assertEquals("1", game.getSecondCountryScore());
     }
 }
