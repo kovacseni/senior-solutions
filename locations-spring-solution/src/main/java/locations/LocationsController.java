@@ -24,4 +24,13 @@ public class LocationsController {
     public LocationDto getLocationById(@PathVariable("id") long id) {
         return service.getLocationById(id);
     }
+
+    @GetMapping
+    public List<LocationDto> getLocationsByNameLatLon(@RequestParam Optional<String> prefix,
+                                                      @RequestParam Optional<Double> minLat,
+                                                      @RequestParam Optional<Double> maxLat,
+                                                      @RequestParam Optional<Double> minLon,
+                                                      @RequestParam Optional<Double> maxLon) {
+        return service.getLocationsByNameLatLon(prefix, minLat, maxLat, minLon, maxLon);
+    }
 }
