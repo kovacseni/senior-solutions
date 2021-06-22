@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -22,9 +23,9 @@ public class LocationsControllerTest {
 
     @Test
     void testGetLocations() {
-        when(service.getLocations()).thenReturn(Arrays.asList(new LocationDto("Bagdad"), new LocationDto("Peking")));
+        when(service.getLocations(Optional.empty())).thenReturn(Arrays.asList(new LocationDto("Bagdad"), new LocationDto("Peking")));
 
-        String locationsString = controller.getLocations().toString();
+        String locationsString = controller.getLocations(Optional.empty()).toString();
 
         Assertions.assertThat(locationsString).contains("Peking");
     }

@@ -7,10 +7,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class LocationsService {
@@ -22,8 +20,19 @@ public class LocationsService {
         this.modelMapper = modelMapper;
     }
 
-    public List<LocationDto> getLocations() {
+    public List<LocationDto> getLocations(Optional<String> namePrefix) {
         Type targetListType = new TypeToken<List<LocationDto>>(){}.getType();
-        return modelMapper.map(locations, targetListType);
+        List<Location> filteredLocations = locations.stream()
+                .filter(location -> namePrefix.isEmpty() || location.getName().startsWith(namePrefix.get()))
+                .collect(Collectors.toList());
+        return modelMapper.map(filteredLocations, targetListType);
+    }
+
+    public LocationDto getLocationById(long id) {
+        return modelMapper.map(locations.stream()
+                .filter(location -> location.getId() == id)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Location with id: " + id + " not found.")),
+                LocationDto.class);
     }
 }
