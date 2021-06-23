@@ -25,12 +25,27 @@ public class LocationsController {
         return service.getLocationById(id);
     }
 
-    @GetMapping
+    @GetMapping("/minmax")
     public List<LocationDto> getLocationsByNameLatLon(@RequestParam Optional<String> prefix,
                                                       @RequestParam Optional<Double> minLat,
                                                       @RequestParam Optional<Double> maxLat,
                                                       @RequestParam Optional<Double> minLon,
                                                       @RequestParam Optional<Double> maxLon) {
         return service.getLocationsByNameLatLon(prefix, minLat, maxLat, minLon, maxLon);
+    }
+
+    @PostMapping
+    public LocationDto createLocation(@RequestBody CreateLocationCommand command) {
+        return service.createLocation(command);
+    }
+
+    @PutMapping("/{id}")
+    public LocationDto updateLocation(@PathVariable("id") long id, @RequestBody UpdateLocationCommand command) {
+        return service.updateLocation(id, command);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteLocation(@PathVariable("id") long id) {
+        service.deleteLocation(id);
     }
 }
