@@ -33,7 +33,7 @@ public class LocationsService {
         return modelMapper.map(filteredLocations, targetListType);
     }
 
-    public LocationDto getLocationById(long id) {
+    public LocationDto findLocationById(long id) {
         return modelMapper.map(locations.stream()
                 .filter(location -> location.getId() == id)
                 .findAny()
@@ -67,7 +67,7 @@ public class LocationsService {
         Location location = locations.stream()
                 .filter(loc -> loc.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Location with id: " + id + " not found."));
+                .orElseThrow(() -> new LocationNotFoundException("Location with id: " + id + " not found."));
         location.setName(command.getName());
         location.setLat(command.getLat());
         location.setLon(command.getLon());
@@ -80,5 +80,10 @@ public class LocationsService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Location with id: " + id + " not found."));
         locations.remove(location);
+    }
+
+    public void deleteAllLocations() {
+        idGenerator = new AtomicLong();
+        locations.clear();
     }
 }
