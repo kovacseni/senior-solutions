@@ -1,0 +1,96 @@
+###
+GET http://localhost:8080/
+Accept: application/json
+
+###
+POST http://localhost:8080/registrate
+Content-Type: application/json
+
+{
+  "name": "Kiss József",
+  "taj": "296638970",
+  "dateOfBirth": "1980.04.03",
+  "placeOfBirth": "Budapest",
+  "address": "1032, Budapest, Váradi utca 30."
+}
+
+###
+POST http://localhost:8080/registrate
+Content-Type: application/json
+
+{
+  "name": "Nagy Béla",
+  "taj": "437714042",
+  "dateOfBirth": "1975.12.09",
+  "placeOfBirth": "Győr",
+  "address": "9026, Győr, Kenus utca 2."
+}
+
+###
+POST http://localhost:8080/registrate
+Content-Type: application/json
+
+{
+  "name": "Németh Magdolna",
+  "taj": "698093618",
+  "dateOfBirth": "1978.07.12",
+  "placeOfBirth": "Miskolc",
+  "address": "2943, Bábolna, Rákóczi utca 41."
+}
+
+###
+GET http://localhost:8080/registrations
+Accept: application/json
+
+###
+GET http://localhost:8080/registrations/437714042
+Accept: application/json
+
+###
+POST http://localhost:8080/datereservation
+Content-Type: application/json
+
+{
+  "taj": "698093618",
+  "typeOfVaccine": "PFIZER",
+  "placeOfVaccination": "Miskolc",
+  "dateTime": "2021-06-23 09:36"
+}
+
+###
+POST http://localhost:8080/datereservation
+Content-Type: application/json
+
+{
+  "taj": "437714042",
+  "typeOfVaccine": "MODERNA",
+  "placeOfVaccination": "Győr",
+  "dateTime": "2021-05-22 10:28"
+}
+
+###
+POST http://localhost:8080/datereservation
+Content-Type: application/json
+
+{
+  "taj": "437714042",
+  "typeOfVaccine": "MODERNA",
+  "placeOfVaccination": "Győr",
+  "dateTime": "2021-06-30 12:14"
+}
+
+###
+GET http://localhost:8080/reservations
+Accept: application/json
+
+###
+GET http://localhost:8080/reservations/437714042
+Accept: application/json
+
+###
+GET http://localhost:8080/reservations/698093618
+Accept: application/json
+
+###
+GET http://localhost:8080/reservations/296638970
+Accept: application/json
