@@ -1,5 +1,8 @@
 package locations;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -7,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/locations")
+@Tag(name = "Web operations on locations")
 public class LocationsController {
 
     private LocationsService service;
@@ -22,11 +27,16 @@ public class LocationsController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets all locations in a list")
+    @ApiResponse(responseCode = "200", description = "Query of locations was successful")
     public List<LocationDto> getLocations(@RequestParam Optional<String> namePrefix) {
         return service.getLocations(namePrefix);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Finds one exact location by its ID")
+    @ApiResponse(responseCode = "200", description = "Location has been found")
+    @ApiResponse(responseCode = "404", description = "Location has not been found")
     public LocationDto findLocationById(@PathVariable("id") long id) {
             return service.findLocationById(id);
     }
@@ -43,6 +53,8 @@ public class LocationsController {
     */
 
     @GetMapping("/minmax")
+    @Operation(summary = "Gets all locations in a list, which fulfil the conditions")
+    @ApiResponse(responseCode = "200", description = "Query of location(s) was successful")
     public List<LocationDto> getLocationsByNameLatLon(@RequestParam Optional<String> prefix,
                                                       @RequestParam Optional<Double> minLat,
                                                       @RequestParam Optional<Double> maxLat,
@@ -53,23 +65,31 @@ public class LocationsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LocationDto createLocation(@RequestBody CreateLocationCommand command) {
+    @Operation(summary = "Creates a location")
+    @ApiResponse(responseCode = "201", description = "Location has been created")
+    public LocationDto createLocation(@Valid @RequestBody CreateLocationCommand command) {
         return service.createLocation(command);
     }
 
     @PutMapping("/{id}")
-    public LocationDto updateLocation(@PathVariable("id") long id, @RequestBody UpdateLocationCommand command) {
+    @Operation(summary = "Changes the status of an exact location")
+    @ApiResponse(responseCode = "200", description = "Changing of status was successful")
+    public LocationDto updateLocation(@PathVariable("id") long id, @Valid @RequestBody UpdateLocationCommand command) {
         return service.updateLocation(id, command);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Deletes one exact location")
+    @ApiResponse(responseCode = "204", description = "Deletion of location was successful")
     public void deleteLocation(@PathVariable("id") long id) {
         service.deleteLocation(id);
     }
 
     @ExceptionHandler(LocationNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @Operation(summary = "Handles exception when location is not found")
+    @ApiResponse(responseCode = "404", description = "Query of location(s) was unsuccessful")
     public ResponseEntity<Problem> handleNotFound(LocationNotFoundException lnfe) {
         Problem problem =
                 Problem.builder()

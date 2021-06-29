@@ -30,3 +30,14 @@ Accept: application/json
 
 ###
 DELETE http://localhost:8080/api/locations/2
+
+###
+POST http://localhost:8080/api/locations
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Moszkva",
+  "lat": 55.76961,
+  "lon": 37.63722
+}
