@@ -26,14 +26,23 @@ public class LocationsController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Gets all locations in a list")
     @ApiResponse(responseCode = "200", description = "Query of locations was successful")
     public List<LocationDto> getLocations(@RequestParam Optional<String> namePrefix) {
         return service.getLocations(namePrefix);
     }
 
-    @GetMapping("/{id}")
+    /*
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Gets all locations in a list")
+    @ApiResponse(responseCode = "200", description = "Query of locations was successful")
+    public LocationsDto getLocations(@RequestParam Optional<String> namePrefix) {
+        return new LocationsDto(service.getLocations(namePrefix));
+    }
+    */
+
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Finds one exact location by its ID")
     @ApiResponse(responseCode = "200", description = "Location has been found")
     @ApiResponse(responseCode = "404", description = "Location has not been found")
