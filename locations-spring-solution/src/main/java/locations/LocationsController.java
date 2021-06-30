@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/locations")
@@ -26,7 +28,7 @@ public class LocationsController {
         this.service = service;
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping//(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Gets all locations in a list")
     @ApiResponse(responseCode = "200", description = "Query of locations was successful")
     public List<LocationDto> getLocations(@RequestParam Optional<String> namePrefix) {
@@ -42,7 +44,7 @@ public class LocationsController {
     }
     */
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/{id}" /*, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}*/ )
     @Operation(summary = "Finds one exact location by its ID")
     @ApiResponse(responseCode = "200", description = "Location has been found")
     @ApiResponse(responseCode = "404", description = "Location has not been found")
@@ -109,6 +111,26 @@ public class LocationsController {
                 .build();
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Problem> handleValidException(MethodArgumentNotValidException exception) {
+        List<Violation> violations = exception.getBindingResult().getFieldErrors().stream()
+                .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
+                .collect(Collectors.toList());
+
+        Problem problem =
+                Problem.builder().withType(URI.create("locations/not-valid"))
+                .withTitle("Validation error")
+                .withStatus(Status.BAD_REQUEST)
+                .withDetail(exception.getMessage())
+                .with("violations", violations)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_PROBLEM_JSON)
                 .body(problem);
     }

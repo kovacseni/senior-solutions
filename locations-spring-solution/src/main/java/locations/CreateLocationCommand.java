@@ -23,8 +23,9 @@ public class CreateLocationCommand {
     @Schema(description = "Latitude: ")
     private double lat;
 
-    @Min(value = -180)
-    @Max(value = 180)
+  //  @Min(value = -180)
+  //  @Max(value = 180)
+    @Coordinate(type = Type.LON)
     @Schema(description = "Longitude: ")
     private double lon;
 }

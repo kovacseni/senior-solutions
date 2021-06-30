@@ -1,8 +1,10 @@
 package locations;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -11,10 +13,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class LocationsService {
 
     private AtomicLong idGenerator = new AtomicLong();
     private ModelMapper modelMapper;
+
+    @Value("${locations.name-auto-uppercase}")
+    private boolean nameAutoUpperCase;
+
     private List<Location> locations = Collections.synchronizedList(new ArrayList<>(
             Arrays.asList(new Location(idGenerator.incrementAndGet(), "Budapest", 47.49571, 19.05507),
                           new Location(idGenerator.incrementAndGet(), "Berlin", 52.52125, 13.41421),
@@ -59,6 +66,11 @@ public class LocationsService {
 
     public LocationDto createLocation(CreateLocationCommand command) {
         Location location = new Location(idGenerator.incrementAndGet(), command.getName(), command.getLat(), command.getLon());
+        /*
+        if (nameAutoUpperCase == true) {
+            location.setName(location.getName().toUpperCase());
+        }
+        */
         locations.add(location);
         return modelMapper.map(location, LocationDto.class);
     }

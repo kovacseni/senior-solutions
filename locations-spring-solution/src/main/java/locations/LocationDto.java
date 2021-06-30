@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@XmlRootElement
+//@XmlRootElement
 public class LocationDto {
 
     private long id;
