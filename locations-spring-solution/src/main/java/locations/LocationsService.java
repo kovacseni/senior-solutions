@@ -72,6 +72,9 @@ public class LocationsService {
         }
         */
         locations.add(location);
+
+        log.info("Location with id = " + location.getId() + " has been created.");
+
         return modelMapper.map(location, LocationDto.class);
     }
 
@@ -83,6 +86,9 @@ public class LocationsService {
         location.setName(command.getName());
         location.setLat(command.getLat());
         location.setLon(command.getLon());
+
+        log.info("Location with id = " + location.getId() + " has been updated.");
+
         return modelMapper.map(location, LocationDto.class);
     }
 
@@ -92,6 +98,8 @@ public class LocationsService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Location with id: " + id + " not found."));
         locations.remove(location);
+
+        log.info("Location with id = " + location.getId() + " has been deleted.");
     }
 
     public void deleteAllLocations() {
