@@ -1,5 +1,6 @@
 package locations;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -14,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,6 +28,9 @@ public class LocationsControllerWebMvcIT {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void testGetLocations() throws Exception {
@@ -58,21 +63,55 @@ public class LocationsControllerWebMvcIT {
                 .andExpect(jsonPath("$[1].name", equalTo("Athén")));
     }
 
-    /*@Test
+    @Test
     void testCreateLocation() throws Exception {
         when(service.createLocation(any())).thenReturn(new LocationDto(2L, "Athén", 37.97954, 23.72638));
 
-        mockMvc.perform(post("/api/locations"))
+        mockMvc.perform(post("/api/locations").contentType(APPLICATION_JSON)
+        .content("{\n" +
+                "  \"name\": \"Moszkva\",\n" +
+                "  \"lat\": 55.76961,\n" +
+                "  \"lon\": 37.63722\n" +
+                "}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", equalTo("Athén")));
-    }*/
+    }
 
-   /* @Test
+    @Test
+    void testCreateLocation2() throws Exception {
+        when(service.createLocation(any())).thenReturn(new LocationDto(2L, "Athén", 37.97954, 23.72638));
+
+        CreateLocationCommand command = new CreateLocationCommand("Moszkva", 55.76961, 37.63722);
+        String json = objectMapper.writeValueAsString(command);
+        mockMvc.perform(post("/api/locations").contentType(APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", equalTo("Athén")));
+    }
+
+    @Test
     void testUpdateLocation() throws Exception {
         when(service.updateLocation(anyLong(), any())).thenReturn(new LocationDto(2L, "Athén", 37.97954, 23.72638));
 
-        mockMvc.perform(put("/api/locations/2"))
+        mockMvc.perform(put("/api/locations/2").contentType(APPLICATION_JSON)
+        .content("{\n" +
+                "  \"name\": \"Moszkva\",\n" +
+                "  \"lat\": 55.76961,\n" +
+                "  \"lon\": 37.63722\n" +
+                "}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo("Athén")));
-    }*/
+    }
+
+    @Test
+    void testUpdateLocation2() throws Exception {
+        when(service.updateLocation(anyLong(), any())).thenReturn(new LocationDto(2L, "Athén", 37.97954, 23.72638));
+
+        CreateLocationCommand command = new CreateLocationCommand("Moszkva", 55.76961, 37.63722);
+        String json = objectMapper.writeValueAsString(command);
+        mockMvc.perform(put("/api/locations/2").contentType(APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", equalTo("Athén")));
+    }
 }

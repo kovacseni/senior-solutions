@@ -85,8 +85,9 @@ public class LocationsControllerRestTemplateIT {
         Assertions.assertEquals(12.50557, locationDto.getLon());
     }
 
-    /*@Test
+    @Test
     void testUpdateLocation() {
+        template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
         template.put("/api/locations/1", new UpdateLocationCommand("Róma", 2.2, 3.3));
 
         LocationDto expected = template.exchange("/api/locations/1",
@@ -98,7 +99,7 @@ public class LocationsControllerRestTemplateIT {
         Assertions.assertEquals("Róma", expected.getName());
         Assertions.assertEquals(2.2, expected.getLat());
         Assertions.assertEquals(3.3, expected.getLon());
-    }*/
+    }
 
     @Test
     void testDeleteLocation() {

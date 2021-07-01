@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.with;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest
@@ -120,7 +121,7 @@ public class LocationsControllerRestAssuredIT {
                 .body("size()", equalTo(1));
     }
 
-   /* @Test
+    @Test
     void testUpdateLocation() {
         RestAssuredMockMvc.with()
                 .body(new CreateLocationCommand("Róma", 41.90383, 12.50557))
@@ -129,13 +130,14 @@ public class LocationsControllerRestAssuredIT {
                 .statusCode(201);
 
         with()
-                .put("/api/locations/1", new UpdateLocationCommand("Róma", 2.2, 3.3))
+                .body(new UpdateLocationCommand("Róma", 2.2, 3.3))
+                .put("/api/locations/1")
                 .then()
                 .statusCode(200)
-                .body("[0].name", equalTo("Róma"))
-                .body("[0].lat", equalTo(2.2))
-                .body("[0].lat", equalTo(3.3));
-    }*/
+                .body("name", equalTo("Róma"))
+                .body("lat", equalTo(2.2F))
+                .body("lon", equalTo(3.3F));
+    }
 
     @Test
     void testDeleteLocation() {
