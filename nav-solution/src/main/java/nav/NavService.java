@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class NavService {
 
-    private List<CaseType> cases = new ArrayList<>();
+    private List<CaseType> cases = new ArrayList<>(/*Arrays.asList(new CaseType("001", "Adóbevallás"), new CaseType("002", "Befizetés"))*/);
     private ModelMapper modelMapper;
     private AtomicLong idGenerator = new AtomicLong();
     private List<Appointment> reservedAppointments = new ArrayList<>();
