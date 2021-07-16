@@ -25,9 +25,4 @@ public class NavController {
     public AppointmentDto reserveNewAppointment(@Valid @RequestBody ReserveNewAppointmentCommand command) {
         return service.reserveNewAppointment(command);
     }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public void handleValidationException() {
-        throw new NavValidationFailException();
-    }
 }
