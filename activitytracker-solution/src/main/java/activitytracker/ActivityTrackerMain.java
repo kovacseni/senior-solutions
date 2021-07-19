@@ -11,6 +11,7 @@ public class ActivityTrackerMain {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("pu");
         EntityManager manager = factory.createEntityManager();
         insert(manager);
+        factory.close();
     }
 
     private static void insert(EntityManager manager) {
@@ -24,5 +25,7 @@ public class ActivityTrackerMain {
                 "hajnali bicózás az erdőben", ActivityType.BIKING));
 
         manager.getTransaction().commit();
+
+        manager.close();
     }
 }
