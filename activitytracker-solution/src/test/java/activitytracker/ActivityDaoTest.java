@@ -41,4 +41,19 @@ public class ActivityDaoTest {
         assertEquals("gyors kör a tó körül", expected.get(0).getDescription());
         assertEquals("hajnali bicózás az erdőben", expected.get(1).getDescription());
     }
+
+    @Test
+    void testUpdateActivity() {
+        Activity activity = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
+                "gyors kör a tó körül", ActivityType.RUNNING);
+        activityDao.saveActivity(activity);
+        Activity expected = activityDao.findActivityById(activity.getId());
+
+        assertEquals("gyors kör a tó körül", expected.getDescription());
+
+        activityDao.updateActivity(activity.getId(), "Futáááás!");
+        Activity modified = activityDao.findActivityById(activity.getId());
+
+        assertEquals("Futáááás!", modified.getDescription());
+    }
 }
