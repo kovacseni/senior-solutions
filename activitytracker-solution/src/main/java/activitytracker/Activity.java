@@ -9,8 +9,10 @@ import java.util.Objects;
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "activity_id", nullable = false)
+    @GeneratedValue(generator = "Act_Gen")
+    @TableGenerator(name = "Act_Gen", table = "act_id_gen", pkColumnName = "id_gen", valueColumnName = "id_val")
+/*  @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "activity_id", nullable = false) */
     private Long id;
 
     @Column(name = "activity_start_time", nullable = false)
