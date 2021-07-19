@@ -10,17 +10,17 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "activity_id")
+    @Column(name = "activity_id", nullable = false)
     private Long id;
 
-    @Column(name = "activity_start_time")
+    @Column(name = "activity_start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "activity_description")
+    @Column(name = "activity_description", nullable = false, length = 200)
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "activity_type")
+    @Column(name = "activity_type", nullable = false, length = 20)
     private ActivityType type;
 
     public Activity() {
