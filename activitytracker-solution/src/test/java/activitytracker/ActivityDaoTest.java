@@ -87,19 +87,34 @@ public class ActivityDaoTest {
         assertEquals(2.25120, expected.getTrackPoints().get(1).getLon());
     }
 
- /*   @Test
-    void testPhoneNumbers() {
-        PhoneNumber phoneNumberWork = new PhoneNumber("work", "4321");
-        PhoneNumber phoneNumberHome = new PhoneNumber("home", "1234");
+    @Test
+    void testFindTrackPointCoordinatesByDate() {
+        Activity activity1 = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
+                "gyors kör a tó körül", ActivityType.RUNNING);
+        activity1.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+        activity1.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
+        activity1.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 3, 4, 5, 6), 48.87376, 2.25120));
 
-        Employee employee = new Employee("John Doe");
-        employee.addPhoneNumber(phoneNumberWork);
-        employee.addPhoneNumber(phoneNumberHome);
-        employeeDao.saveEmployee(employee);
+        activityDao.saveActivity(activity1);
 
-        Employee anotherEmployee = employeeDao.findEmployeeByIdWithPhoneNumbers(employee.getId());
-        assertEquals(2, anotherEmployee.getPhoneNumbers().size());
-        assertEquals("work", anotherEmployee.getPhoneNumbers().get(0).getType());
-    }*/
+        Activity activity2 = new Activity(LocalDateTime.of(2021, 7, 17, 6, 0),
+                "hajnali bicózás az erdőben", ActivityType.BIKING);
+        activity2.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+        activity2.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
+        activity2.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 3, 4, 5, 6), 48.87376, 2.25120));
 
+        activityDao.saveActivity(activity2);
+
+        Activity activity3 = new Activity(LocalDateTime.of(2018, 7, 15, 19, 15),
+                "esti levezetés", ActivityType.RUNNING);
+        activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+        activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
+        activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 3, 4, 5, 6), 48.87376, 2.25120));
+
+        activityDao.saveActivity(activity3);
+
+        List<Coordinate> expected = activityDao.findTrackPointCoordinatesByDate(LocalDateTime.of(2019, 6, 7, 8, 9), 1, 20);
+
+        assertEquals(3, expected.size());
+    }
 }
