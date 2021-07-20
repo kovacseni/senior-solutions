@@ -69,4 +69,37 @@ public class ActivityDaoTest {
 
         assertEquals(Arrays.asList("déli futás", "Szelidi-tó"), expected.getLabels());
     }
+
+    @Test
+    void testFindActivityByIdWithTrackPoints() {
+        Activity activity = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
+                "gyors kör a tó körül", ActivityType.RUNNING);
+        activity.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+        activity.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
+        activity.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 3, 4, 5, 6), 48.87376, 2.25120));
+
+        activityDao.saveActivity(activity);
+
+        Activity expected = activityDao.findActivityByIdWithTrackPoints(activity.getId());
+
+        assertEquals(3, expected.getTrackPoints().size());
+        assertEquals(-33.88223, expected.getTrackPoints().get(2).getLat());
+        assertEquals(2.25120, expected.getTrackPoints().get(1).getLon());
+    }
+
+ /*   @Test
+    void testPhoneNumbers() {
+        PhoneNumber phoneNumberWork = new PhoneNumber("work", "4321");
+        PhoneNumber phoneNumberHome = new PhoneNumber("home", "1234");
+
+        Employee employee = new Employee("John Doe");
+        employee.addPhoneNumber(phoneNumberWork);
+        employee.addPhoneNumber(phoneNumberHome);
+        employeeDao.saveEmployee(employee);
+
+        Employee anotherEmployee = employeeDao.findEmployeeByIdWithPhoneNumbers(employee.getId());
+        assertEquals(2, anotherEmployee.getPhoneNumbers().size());
+        assertEquals("work", anotherEmployee.getPhoneNumbers().get(0).getType());
+    }*/
+
 }

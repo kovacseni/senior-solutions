@@ -51,4 +51,13 @@ public class ActivityDao {
         manager.close();
         return activity;
     }
+
+    public Activity findActivityByIdWithTrackPoints(long id) {
+        EntityManager manager = factory.createEntityManager();
+        Activity activity = manager.createQuery("select a from Activity a join fetch a.trackPoints where a.id = :id", Activity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        manager.close();
+        return activity;
+    }
 }
