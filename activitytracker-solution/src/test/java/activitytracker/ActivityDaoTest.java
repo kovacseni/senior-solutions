@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ActivityDaoTest {
@@ -116,5 +117,36 @@ public class ActivityDaoTest {
         List<Coordinate> expected = activityDao.findTrackPointCoordinatesByDate(LocalDateTime.of(2019, 6, 7, 8, 9), 1, 20);
 
         assertEquals(3, expected.size());
+    }
+
+    @Test
+    void testFindTrackPointCountByActivity() {
+        Activity activity1 = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
+                "gyors kör a tó körül", ActivityType.RUNNING);
+        activity1.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+        activity1.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
+
+        activityDao.saveActivity(activity1);
+
+        Activity activity2 = new Activity(LocalDateTime.of(2021, 7, 17, 6, 0),
+                "hajnali bicózás az erdőben", ActivityType.BIKING);
+        activity2.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+
+        activityDao.saveActivity(activity2);
+
+        Activity activity3 = new Activity(LocalDateTime.of(2018, 7, 15, 19, 15),
+                "esti levezetés", ActivityType.RUNNING);
+        activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
+        activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
+        activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 3, 4, 5, 6), 48.87376, 2.25120));
+
+        activityDao.saveActivity(activity3);
+
+        List<Object[]> expected = activityDao.findTrackPointCountByActivity();
+
+        Object[] dataOfActivity2 = new Object[]{"hajnali bicózás az erdőben", 1L};
+
+        assertEquals(3, expected.size());
+        assertArrayEquals(dataOfActivity2, expected.get(2));
     }
 }
