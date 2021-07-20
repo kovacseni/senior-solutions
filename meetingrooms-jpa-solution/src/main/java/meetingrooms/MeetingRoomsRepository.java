@@ -12,7 +12,7 @@ public interface MeetingRoomsRepository {
 
         List<MeetingRoom> getMeetingRooms();
 
-        List<MeetingRoom> getExactMeetingRoomByName(String name);
+        MeetingRoom getExactMeetingRoomByName(String name);
 
         List<MeetingRoom> getMeetingRoomsByPrefix(String nameOrPrefix);
 
