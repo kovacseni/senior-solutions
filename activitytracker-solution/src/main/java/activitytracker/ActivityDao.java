@@ -87,7 +87,7 @@ public class ActivityDao {
 
     public List<Object[]> findTrackPointCountByActivity() {
         EntityManager manager = factory.createEntityManager();
-        List<Object[]> activities = manager.createQuery("select a.description, count(t) from Activity a join a.trackPoints t group by a.description", Object[].class)
+        List<Object[]> activities = manager.createQuery("select a.description, count(t) from Activity a join a.trackPoints t group by a.description order by a.startTime", Object[].class)
                 .getResultList();
         manager.close();
         return activities;

@@ -134,7 +134,7 @@ public class ActivityDaoTest {
 
         activityDao.saveActivity(activity2);
 
-        Activity activity3 = new Activity(LocalDateTime.of(2018, 7, 15, 19, 15),
+        Activity activity3 = new Activity(LocalDateTime.of(2021, 7, 15, 19, 15),
                 "esti levezetés", ActivityType.RUNNING);
         activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 2, 3, 4, 5), 47.497912, 19.040235));
         activity3.addTrackPoint(new TrackPoint(LocalDateTime.of(2021, 4, 5, 6, 7), -33.88223, 151.33140));
@@ -144,9 +144,13 @@ public class ActivityDaoTest {
 
         List<Object[]> expected = activityDao.findTrackPointCountByActivity();
 
+        Object[] dataOfActivity1 = new Object[]{"gyors kör a tó körül", 2L};
         Object[] dataOfActivity2 = new Object[]{"hajnali bicózás az erdőben", 1L};
+        Object[] dataOfActivity3 = new Object[]{"esti levezetés", 3L};
 
         assertEquals(3, expected.size());
+        assertArrayEquals(dataOfActivity1, expected.get(0));
         assertArrayEquals(dataOfActivity2, expected.get(2));
+        assertArrayEquals(dataOfActivity3, expected.get(1));
     }
 }
