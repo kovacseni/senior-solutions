@@ -8,8 +8,8 @@
 * [x] Entitások konfigurálása
 * [x] Elsődleges kulcs
 * [x] Entitások életciklusa
-* [ ] Többértékű attribútumok
-* [ ] Kapcsolatok
-* [ ] Lekérdezések
-* [ ] Haladó lekérdezések
-* [ ] Deklaratív tranzakciókezelés
+* [x] Többértékű attribútumok
+* [x] Kapcsolatok
+* [x] Lekérdezések
+* [x] Haladó lekérdezések
+* [x] Deklaratív tranzakciókezelés (Ehhez nincs is gyakorlati feladat.)
