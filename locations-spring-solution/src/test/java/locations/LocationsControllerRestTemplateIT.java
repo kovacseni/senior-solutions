@@ -10,22 +10,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(statements = "delete from locations")
 public class LocationsControllerRestTemplateIT {
 
     @Autowired
     TestRestTemplate template;
 
-    @Autowired
+/*  @Autowired
     LocationsService service;
 
     @BeforeEach
     void setUp() {
         service.deleteAllLocations();
-    }
+    } */
 
     @Test
     void testGetLocations() {
@@ -48,7 +50,15 @@ public class LocationsControllerRestTemplateIT {
         LocationDto locationDto =
                 template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
 
-        LocationDto expected = template.exchange("/api/locations/1",
+        long id = template.exchange("/api/locations",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<LocationDto>>() {})
+                .getBody()
+                .get(0)
+                .getId();
+
+        LocationDto expected = template.exchange("/api/locations/" + id,
                 HttpMethod.GET,
                 null,
                 LocationDto.class)
@@ -88,9 +98,18 @@ public class LocationsControllerRestTemplateIT {
     @Test
     void testUpdateLocation() {
         template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
-        template.put("/api/locations/1", new UpdateLocationCommand("Róma", 2.2, 3.3));
 
-        LocationDto expected = template.exchange("/api/locations/1",
+        long id = template.exchange("/api/locations",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<LocationDto>>() {})
+                .getBody()
+                .get(0)
+                .getId();
+
+        template.put("/api/locations/" + id, new UpdateLocationCommand("Róma", 2.2, 3.3));
+
+        LocationDto expected = template.exchange("/api/locations/" + id,
                 HttpMethod.GET,
                 null,
                 LocationDto.class)
@@ -103,7 +122,17 @@ public class LocationsControllerRestTemplateIT {
 
     @Test
     void testDeleteLocation() {
-        template.delete("/api/locations/1");
+        template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
+
+        long id = template.exchange("/api/locations",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<LocationDto>>() {})
+                .getBody()
+                .get(0)
+                .getId();
+
+        template.delete("/api/locations/" + id);
 
         List<LocationDto> expected = template.exchange("/api/locations",
                 HttpMethod.GET,
