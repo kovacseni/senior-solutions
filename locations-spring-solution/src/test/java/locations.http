@@ -22,7 +22,7 @@ Accept: application/json
 }
 
 ###
-PUT http://localhost:8080/api/locations/5
+PUT http://localhost:8080/api/locations/3
 Content-Type: application/json
 Accept: application/json
 
