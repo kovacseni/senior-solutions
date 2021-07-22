@@ -144,9 +144,9 @@ public class ActivityDaoTest {
 
         List<Object[]> expected = activityDao.findTrackPointCountByActivity();
 
-        Object[] dataOfActivity1 = new Object[]{"gyors kör a tó körül", 2L};
-        Object[] dataOfActivity2 = new Object[]{"hajnali bicózás az erdőben", 1L};
-        Object[] dataOfActivity3 = new Object[]{"esti levezetés", 3L};
+        Object[] dataOfActivity1 = new Object[]{"gyors kör a tó körül", 2};
+        Object[] dataOfActivity2 = new Object[]{"hajnali bicózás az erdőben", 1};
+        Object[] dataOfActivity3 = new Object[]{"esti levezetés", 3};
 
         assertEquals(3, expected.size());
         assertArrayEquals(dataOfActivity1, expected.get(0));
