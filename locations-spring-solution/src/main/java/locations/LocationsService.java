@@ -24,6 +24,7 @@ public class LocationsService {
 //  private AtomicLong idGenerator = new AtomicLong();
     private ModelMapper modelMapper;
     private LocationsRepository repository;
+//  private LocationsDao locationsDao;
 
 //  @Value("${locations.name-auto-uppercase}")
 //  private boolean nameAutoUpperCase;
@@ -111,7 +112,61 @@ public class LocationsService {
     public void deleteAllLocations() {
         idGenerator = new AtomicLong();
         locations.clear();
-    } */
+    }
+*/
+
+/*  public List<LocationDto> getLocations(Optional<String> namePrefix) {
+        Type targetListType = new TypeToken<List<LocationDto>>(){}.getType();
+        List<Location> filteredLocations = locationsDao.getLocations().stream()
+                .filter(location -> namePrefix.isEmpty() || location.getName().startsWith(namePrefix.get()))
+                .collect(Collectors.toList());
+        return modelMapper.map(filteredLocations, targetListType);
+    }
+
+    public LocationDto findLocationById(long id) {
+        return modelMapper.map(locationsDao.findLocationById(id),
+                LocationDto.class);
+    }
+
+    public List<LocationDto> getLocationsByNameLatLon(Optional<String> prefix, Optional<Double> minLat, Optional<Double> maxLat, Optional<Double> minLon, Optional<Double> maxLon) {
+        Type targetListType = new TypeToken<List<LocationDto>>(){}.getType();
+        List<Location> filteredLocations = locationsDao.getLocations().stream()
+                .filter(location -> prefix.isEmpty() || location.getName().startsWith(prefix.get()))
+                .filter(location -> minLat.isEmpty() || location.getLat() >= minLat.get())
+                .filter(location -> maxLat.isEmpty() || location.getLat() <= maxLat.get())
+                .filter(location -> minLon.isEmpty() || location.getLon() >= minLon.get())
+                .filter(location -> maxLon.isEmpty() || location.getLon() <= maxLon.get())
+                .collect(Collectors.toList());
+        return modelMapper.map(filteredLocations, targetListType);
+    }
+
+    public LocationDto createLocation(CreateLocationCommand command) {
+        Location location = new Location(command.getName(), command.getLat(), command.getLon());
+
+        location = locationsDao.createLocation(location);
+
+        log.info("Location with id = " + location.getId() + " has been created.");
+
+        return modelMapper.map(location, LocationDto.class);
+    }
+
+    public LocationDto updateLocation(long id, UpdateLocationCommand command) {
+        Location location = new Location(command.getName(), command.getLat(), command.getLon());
+        location = locationsDao.updateLocation(location);
+
+        log.info("Location with id = " + location.getId() + " has been updated.");
+
+        return modelMapper.map(location, LocationDto.class);
+    }
+
+    public void deleteLocation(long id) {
+        locationsDao.deleteById(id);
+    }
+
+    public void deleteAllLocations() {
+        locationsDao.deleteAll();
+    }
+*/
 
     public List<LocationDto> getLocations(Optional<String> namePrefix) {
         Type targetListType = new TypeToken<List<LocationDto>>(){}.getType();
