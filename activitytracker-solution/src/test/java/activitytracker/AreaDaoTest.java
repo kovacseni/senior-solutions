@@ -60,4 +60,18 @@ public class AreaDaoTest {
 
         assertEquals(descriptions, descriptionsFound);
     }
+
+    @Test
+    void testSaveThanFind() {
+        Area area = new Area("Kiskunság");
+        area.getCities().put("Kecskemét", new City("Kecskemét", 110_687));
+        area.getCities().put("Soltvadkert", new City("Soltvadkert", 7342));
+
+        areaDao.saveArea(area);
+        long id = area.getId();
+
+        Area expected = areaDao.findByName("Kiskunság");
+
+        assertEquals(110_687, expected.getCities().get("Kecskemét").getPopulation());
+    }
 }

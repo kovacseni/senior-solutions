@@ -26,4 +26,12 @@ public class AreaDao {
         manager.close();
         return area;
     }
+
+    public Area findByName(String name) {
+        EntityManager manager = factory.createEntityManager();
+        Area area = manager.createQuery("select a from Area a join fetch a.cities where a.name = :name", Area.class)
+                .setParameter("name",name).getSingleResult();
+        manager.close();
+        return area;
+    }
 }
