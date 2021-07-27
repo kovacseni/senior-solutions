@@ -1,0 +1,25 @@
+###
+GET http://localhost:8080/api/authors/
+Accept: application/json
+
+###
+POST http://localhost:8080/api/authors
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Gárdonyi Géza"
+}
+
+###
+POST http://localhost:8080/api/authors/2/books
+Content-Type: application/json
+Accept: application/json
+
+{
+  "isbnNumber": "9783404142163",
+  "title": "Egri csillagok"
+}
+
+###
+DELETE http://localhost:8080/api/authors/2
