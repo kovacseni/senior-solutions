@@ -24,10 +24,10 @@ public class ActivityDaoTest {
 
     @Test
     void testSaveThanFind() {
-        Activity employee = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
+        Activity activity = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
                 "gyors kör a tó körül", ActivityType.RUNNING);
-        activityDao.saveActivity(employee);
-        Activity expected = activityDao.findActivityById(employee.getId());
+        activityDao.saveActivity(activity);
+        Activity expected = activityDao.findActivityById(activity.getId());
 
         assertEquals("gyors kör a tó körül", expected.getDescription());
     }
