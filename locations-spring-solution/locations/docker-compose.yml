@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  locations-net-mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - '3309:3306'
+    environment:
+      MYSQL_DATABASE: locations
+      MYSQL_USER: locations
+      MYSQL_PASSWORD: locations
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
+  locationsnet:
+    image: locationscompose
+    restart: always
+    ports:
+      - '8081:8080'
+    depends_on:
+      - locations-net-mariadb
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mariadb://localhost:3309/locations?useUnicode=true'
+    entrypoint: ['./wait-for-it.sh', '-t', '120', 'locations-net-mariadb:3309', '--', 'java', 'org.springframework.boot.loader.JarLauncher']
