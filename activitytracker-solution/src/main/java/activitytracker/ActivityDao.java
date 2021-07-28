@@ -2,6 +2,7 @@ package activitytracker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,5 +92,16 @@ public class ActivityDao {
                 .getResultList();
         manager.close();
         return activities;
+    }
+
+    public void removeActivitiesByDateAndType(LocalDateTime afterThis, ActivityType type) {
+        EntityManager manager = factory.createEntityManager();
+        manager.getTransaction().begin();
+        manager.createQuery("delete from Activity a where a.startTime >= :start and a.type = :type")
+                .setParameter("start", afterThis)
+                .setParameter("type", type)
+                .executeUpdate();
+        manager.getTransaction().commit();
+        manager.close();
     }
 }

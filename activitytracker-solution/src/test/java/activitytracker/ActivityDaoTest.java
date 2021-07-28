@@ -8,6 +8,8 @@ import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -167,5 +169,25 @@ public class ActivityDaoTest {
 
         assertEquals(12.3, expected.getDistance());
         assertEquals(12600, expected.getDuration());
+    }
+
+    @Test
+    void testRemoveActivitiesByDateAndType() {
+        activityDao.saveActivity(new Activity(LocalDateTime.of(2021, 7, 13, 20, 55),
+                "esti levezetés", ActivityType.RUNNING));
+        activityDao.saveActivity(new Activity(LocalDateTime.of(2021, 7, 15, 14, 55),
+                "gyors kör a tó körül", ActivityType.RUNNING));
+        activityDao.saveActivity(new Activity(LocalDateTime.of(2021, 7, 17, 5, 55),
+                "hajnali bicózás az erdőben", ActivityType.BIKING));
+
+        activityDao.removeActivitiesByDateAndType(LocalDateTime.of(2021, 7, 14, 0, 0), ActivityType.RUNNING);
+
+        List<Activity> expected = activityDao.listActivities();
+
+        assertEquals(2, expected.size());
+
+        Set<String> expectedDescriptions = expected.stream().map(Activity::getDescription).collect(Collectors.toSet());
+
+        assertEquals(Set.of("esti levezetés", "hajnali bicózás az erdőben"), expectedDescriptions);
     }
 }
