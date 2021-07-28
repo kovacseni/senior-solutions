@@ -1,5 +1,7 @@
 # JPA
 
+Kérlek, jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
+
 * [x] Egyszerű mentés JPA-val
 * [x] További egyszerű műveletek JPA-val
 * [x] Architektúra és integrációs tesztelés
@@ -8,11 +10,15 @@
 * [x] Entitások életciklusa
 * [x] Többértékű attribútumok
 * [x] Kapcsolatok
-* [ ] Több-több kapcsolatok
-* [ ] Entitások mapekben
-* [ ] Beágyazott objektumok és másodlagos tábla
-* [ ] Öröklődés 
+* [x] Több-több kapcsolatok
+* [x] Entitások mapekben
+* [x] Beágyazott objektumok és másodlagos tábla
+* [x] Öröklődés 
 * [x] Lekérdezések
 * [x] Haladó lekérdezések
-* [ ] Bulk műveletek
+* [x] Bulk műveletek
+* [ ] JPA használata Spring Frameworkkel
 * [ ] JPA Spring Boottal
+* [ ] Spring Data JPA
+* [ ] JPA Java EE-vel
+* [ ] Deklaratív tranzakciókezelés

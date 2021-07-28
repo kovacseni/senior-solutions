@@ -1,6 +1,6 @@
 # Órai feladatok
 
-Kérlek jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
+Kérlek, jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
 
 * [x] Meeting room feladat, adatbázisba mentéssel, csak egy entitással
 * [x] Meeting room feladat, adatbázisba mentéssel, csak két entitással (meeting room, meeting)

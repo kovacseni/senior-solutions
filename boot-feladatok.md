@@ -1,6 +1,6 @@
 # Spring Boot feladatok
 
-Kérlek jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
+Kérlek, jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
 
 * [x] Bevezetés a Spring Framework és Spring Boot használatába
 * [x] Bevezetés a Spring Boot használatába

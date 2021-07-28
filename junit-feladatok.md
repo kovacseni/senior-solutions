@@ -1,6 +1,6 @@
 # JUnit feladatok
 
-Kérlek jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
+Kérlek, jelöld be, hogy melyik gyakorlati feladatokat oldottad meg!
 
 * [x] Bevezetés a JUnit használatába
 * [x] Futtatás Mavennel
