@@ -9,6 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "activities")
 @NamedQuery(name = "trackPointsAfterDate", query = "select a from Activity a join fetch a.trackPoints where a.startTime > :startTime")
+@SecondaryTable(name = "activity_details", pkJoinColumns = @PrimaryKeyJoinColumn(name = "activity_id"))
 public class Activity {
 
     @Id
@@ -43,6 +44,12 @@ public class Activity {
 
     @ManyToMany(mappedBy = "activities")
     private List<Area> areas = new ArrayList<>();
+
+    @Column(table = "activity_details")
+    private double distance;
+
+    @Column(table = "activity_details")
+    private long duration;
 
     public Activity() {
     }
@@ -106,6 +113,14 @@ public class Activity {
         return areas;
     }
 
+    public double getDistance() {
+        return distance;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -140,6 +155,14 @@ public class Activity {
 
     public void setAreas(List<Area> areas) {
         this.areas = areas;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     public void addTrackPoint(TrackPoint trackPoint) {

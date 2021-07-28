@@ -153,4 +153,19 @@ public class ActivityDaoTest {
         assertArrayEquals(dataOfActivity2, expected.get(2));
         assertArrayEquals(dataOfActivity3, expected.get(1));
     }
+
+    @Test
+    void testActivityWithDetails() {
+        Activity activity = new Activity(LocalDateTime.of(2021, 7, 13, 14, 55),
+                "gyors kör a tó körül", ActivityType.RUNNING);
+        activity.setDistance(12.3);
+        activity.setDuration(12600);
+
+        activityDao.saveActivity(activity);
+
+        Activity expected = activityDao.findActivityById(activity.getId());
+
+        assertEquals(12.3, expected.getDistance());
+        assertEquals(12600, expected.getDuration());
+    }
 }
