@@ -177,9 +177,7 @@ public class LocationsService {
     }
 
     public LocationDto findLocationById(long id) {
-        return modelMapper.map(repository.findById(id).stream()
-                        .filter(location -> location.getId() == id)
-                        .findAny()
+        return modelMapper.map(repository.findById(id)
                         .orElseThrow(() -> new IllegalArgumentException("Location with id: " + id + " not found.")),
                 LocationDto.class);
     }
