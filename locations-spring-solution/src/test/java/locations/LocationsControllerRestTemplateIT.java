@@ -47,16 +47,10 @@ public class LocationsControllerRestTemplateIT {
 
     @Test
     void testFindLocationById() {
-        LocationDto locationDto =
+        LocationDto location =
                 template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
 
-        long id = template.exchange("/api/locations",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<LocationDto>>() {})
-                .getBody()
-                .get(0)
-                .getId();
+        long id = location.getId();
 
         LocationDto expected = template.exchange("/api/locations/" + id,
                 HttpMethod.GET,
@@ -97,15 +91,10 @@ public class LocationsControllerRestTemplateIT {
 
     @Test
     void testUpdateLocation() {
-        template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
+        LocationDto location =
+                template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
 
-        long id = template.exchange("/api/locations",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<LocationDto>>() {})
-                .getBody()
-                .get(0)
-                .getId();
+        long id = location.getId();
 
         template.put("/api/locations/" + id, new UpdateLocationCommand("Róma", 2.2, 3.3));
 
@@ -122,15 +111,10 @@ public class LocationsControllerRestTemplateIT {
 
     @Test
     void testDeleteLocation() {
-        template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
+        LocationDto location =
+                template.postForObject("/api/locations", new CreateLocationCommand("Róma", 41.90383, 12.50557), LocationDto.class);
 
-        long id = template.exchange("/api/locations",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<LocationDto>>() {})
-                .getBody()
-                .get(0)
-                .getId();
+        long id = location.getId();
 
         template.delete("/api/locations/" + id);
 
