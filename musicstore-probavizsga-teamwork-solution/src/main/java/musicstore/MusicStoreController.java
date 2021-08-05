@@ -47,7 +47,7 @@ public class MusicStoreController {
     }
 
     @PutMapping("/{id}")
-    public InstrumentDTO updatePrice(@PathVariable Long id, @RequestBody UpdatePriceCommand command) {
+    public InstrumentDTO updatePrice(@PathVariable Long id, @Valid @RequestBody UpdatePriceCommand command) {
         return musicStoreService.updatePrice(id, command);
     }
 
@@ -81,7 +81,7 @@ public class MusicStoreController {
                         .collect(Collectors.toList());
 
         Problem problem = Problem.builder()
-                .withType(URI.create("locations/validation-error"))
+                .withType(URI.create("instruments/validation-error"))
                 .withTitle("Validation error")
                 .withStatus(Status.BAD_REQUEST)
                 .withDetail(exception.getMessage())
