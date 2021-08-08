@@ -2,6 +2,7 @@ package org.training360.com.moviesquerypractice;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Set;
 
@@ -14,11 +15,11 @@ public interface StudioRepository extends JpaRepository<Studio, Long> {
 
 //  Kérdezzük le azokat a stúdiókat, ahol egy paraméterül átadott színész szerepelt legalább egy filmben!
 
-    @Query("select s from Studio s where (select m from Movie m where (select a from Actor a where a = :actor) member of m.actors) member of s.movies")
-    Set<Studio> findStudiosByMoviesContaining(Actor actor);
+    @Query("select s from Studio s join fetch s.movies m join fetch m.actors a where a.name = :name")
+    Set<Studio> findStudiosByMoviesContaining(@Param("name") String name);
 
 //  Adjuk vissza azt a stúdiót, ahol egy színész legalább két filmben szerepel!
 
-    @Query("select s from Studio s")
-    Set<Studio> findStudiosByMoviesContainingAnd(Actor actor);
+    @Query("select distinct s from Movie m left join m.studio s left join m.actors a group by a.name, m.studio.id having count (s.name) > 1")
+    Set<Studio> findStudiosByActorWithMinTwoFilms();
 }

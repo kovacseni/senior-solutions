@@ -10,7 +10,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
 //  Kérdezzük le azokat filmeket, amelyekben a paraméterül átadott nevű színész szerepel!
 
-    @Query("select m from Movie m where (select a from Actor a where a.name = :name) member of m.actors")
+    @Query("select m from Movie m join fetch m.actors a where a.name = :name")
     Set<Movie> findMoviesByActorsIn(@Param("name") String name);
 
 //  Kérdezzük le azokat a filmeket amik egy paraméterül átadott stúdióban készültek egy paraméterül átadott évben!
